@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MetroFramework.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
@@ -14,7 +15,7 @@ using MySql.Data.MySqlClient;
 
 namespace SoruProjesiYon
 {
-    public partial class girisyap : Form
+    public partial class girisyap : MetroForm
     {
         MySqlConnection con;
         MySqlCommand cmd;
@@ -62,21 +63,6 @@ namespace SoruProjesiYon
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         private void Btn_uyeol_Click(object sender, EventArgs e)
         {
            
@@ -87,7 +73,7 @@ namespace SoruProjesiYon
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-
+          
         }
     }
     }

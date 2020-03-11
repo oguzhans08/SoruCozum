@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetroFramework.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,11 +7,16 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+
+
+
+
 using System.Windows.Forms;
 
 namespace SoruProjesiYon
 {
-    public partial class anasayfa : Form
+    public partial class anasayfa : MetroForm
     {
         public anasayfa()
         {
@@ -42,7 +48,7 @@ namespace SoruProjesiYon
 
         private void Btn_matematik_ders_Click(object sender, EventArgs e)
         {
-            derssecim = "Matematik";
+            derssecim = "matematik";
             ders_secim_form ders_secm = new ders_secim_form();
 
             ders_secm.derssecim = derssecim;
@@ -52,7 +58,7 @@ namespace SoruProjesiYon
 
         private void Btn_kimya_ders_Click(object sender, EventArgs e)
         {
-            derssecim = "Kimya";
+            derssecim = "kimya";
             ders_secim_form ders_secm = new ders_secim_form();
 
             ders_secm.derssecim = derssecim;
@@ -62,7 +68,7 @@ namespace SoruProjesiYon
 
         private void Btn_cografya_ders_Click(object sender, EventArgs e)
         {
-            derssecim = "Coğrafya";
+            derssecim = "cografya";
             ders_secim_form ders_secm = new ders_secim_form();
 
             ders_secm.derssecim = derssecim;
@@ -78,6 +84,11 @@ namespace SoruProjesiYon
             ders_secm.derssecim = derssecim;
             ders_secm.Show();
             this.Hide();
+
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
 
         }
     }

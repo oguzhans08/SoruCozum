@@ -41,11 +41,10 @@ namespace SoruProjesiYon
                 dr = cmd.ExecuteReader();
                 if (dr.Read())
                 {
-                    MessageBox.Show("Giriş Başarılı.");
-                }
-                else
-                {
-
+                    MessageBox.Show(txt_kullaniciadi+" Hoşgeldin! üye oldunuz!");
+                    girisyap form1 = new girisyap();//açılacak form
+                                              //bu formu parent olarak veriyoruz.
+                    form1.Show(); //form 2 açılıyor.
                 }
                 con.Close();
 
@@ -57,6 +56,11 @@ namespace SoruProjesiYon
 
             }
             
+        }
+
+        private void Uyeol_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
