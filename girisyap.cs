@@ -75,6 +75,18 @@ namespace SoruProjesiYon
         {
           
         }
+
+        private void Label1_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            ogr_girisyap form1 = new ogr_girisyap();//açılacak form
+                                                    //bu formu parent olarak veriyoruz.
+            form1.Show(); //form 2 açılıyor.
+            this.Hide();
+        }
     }
     }
 

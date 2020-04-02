@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using MySql.Data;//2
 using System.Data.SqlClient;
-using static Globals;
+
 
 
 
