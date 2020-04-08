@@ -35,7 +35,7 @@ namespace SoruProjesiYon
         {
             ogr_secim_dersler ogr_secim_dersler = new ogr_secim_dersler();
 
-
+            ogr_secim_dersler.kullaniciAdi = kullaniciAdi;
             ogr_secim_dersler.Show();
             this.Hide();
         }

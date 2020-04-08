@@ -65,6 +65,35 @@ namespace SoruProjesiYon
         Pen pen;
         private void Ders_secim_form_Load(object sender, EventArgs e)
         {
+          
+            con = new MySqlConnection("datasource=127.0.0.1;port=3306;username=root;password=;database=sorucozum;");
+
+            cmd = new MySqlCommand();
+            con.Open();
+            cmd.Connection = con;
+        
+            cmd.CommandText = "Select * from uyeler where kullaniciadi='" + kullaniciAdi + "'";
+            dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                // 0 id
+                // 1 soru
+                // 2dogrucevap
+                // 3cevap1
+                // 4cevap2
+                // 5cevap3
+                // 6cevap4
+                label6.Text = dr.GetValue(0).ToString();
+               
+               
+            
+
+            }
+            con.Close();
+
+
+
+
             btn_bitir.Enabled = false;
             g = panel1.CreateGraphics();
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -73,8 +102,7 @@ namespace SoruProjesiYon
             label3.Text = sayi.ToString();
 
 
-            con = new MySqlConnection("datasource=127.0.0.1;port=3306;username=root;password=;database=sorucozum;");
-
+         
 
             lbl_derssecim.Text = derssecim;
 
@@ -472,7 +500,21 @@ namespace SoruProjesiYon
 
             }
 
+            cmd = new MySqlCommand();
+            con.Open();
+            cmd.Connection = con;
+            cmd.CommandText = "insert into cozulensorular(kullaniciID, soruID) values('" + label6.Text + "', '" + sayi + "')";
+            dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                MessageBox.Show("Sayi Soru ID: " + sayi);
+            }
+            con.Close();
 
+            
+     
+           
+       
             //veritabanından dogru_cevap sütunundan cevabı al
         }
 
@@ -530,9 +572,11 @@ namespace SoruProjesiYon
         {
             dogrusayi = dogru;
             yanlissayi = yanlis;
-
+         
             istatistik istatistikfrm = new istatistik();
 
+            istatistikfrm.kullaniciAdi = kullaniciAdi;
+        
             istatistikfrm.dogrusayi = dogrusayi;
             istatistikfrm.yanlissayi = yanlissayi;
 
@@ -624,6 +668,11 @@ namespace SoruProjesiYon
 
 
 
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            
         }
 
         private void Panel1_MouseUp(object sender, MouseEventArgs e)

@@ -33,18 +33,52 @@ namespace SoruProjesiYon
             con = new MySqlConnection("datasource=127.0.0.1;port=3306;username=root;password=;database=sorucozum;");
 
         }
-
-   
         public string kullaniciAdi { get; set; }
         public string derssecim { get; set; }
         public string cevaps;
         private void Anasayfa_Load(object sender, EventArgs e)
         {
+            cmd = new MySqlCommand();
+            con.Open();
+            cmd.Connection = con;
+
+            cmd.CommandText = "Select * from uyeler where kullaniciadi='" + kullaniciAdi + "'";
+            dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                // 0 id
+                // 1 soru
+                // 2dogrucevap
+                // 3cevap1
+                // 4cevap2
+                // 5cevap3
+                // 6cevap4
+                label10.Text = dr.GetValue(0).ToString();
+                var kullaniciID = label10.Text;
             
+
+
+            }
+            con.Close();
+
+            cmd = new MySqlCommand();
+            con.Open();
+            cmd.Connection = con;
+            //SELECT COUNT(soruID) FROM cozulensorular where `kullaniciID`= 3;
+            cmd.CommandText = "SELECT COUNT(soruID) FROM cozulensorular where kullaniciID='" + label10.Text + "'";
+            dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+             
+                label4.Text = dr.GetValue(0).ToString();
+
+            }
+            con.Close();
+
             string imgUrl;
             kullansali.Text = kullaniciAdi;
 
-            MessageBox.Show(kullaniciAdi);
+           
             cmd = new MySqlCommand();
             con.Open();
             cmd.Connection = con;
@@ -65,12 +99,10 @@ namespace SoruProjesiYon
            string derssecim = "turkce";
 
             ders_secim_form ders_secm = new ders_secim_form();
-
+            ders_secm.kullaniciAdi = kullaniciAdi;
             ders_secm.derssecim = derssecim;
             ders_secm.Show();
             this.Hide();
-
-
         }
 
         private void Btn_matematik_ders_Click(object sender, EventArgs e)

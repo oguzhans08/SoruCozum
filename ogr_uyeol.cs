@@ -29,17 +29,20 @@ namespace SoruProjesiYon
 
         private void Ogr_uyeol_Load(object sender, EventArgs e)
         {
-         
+           
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            var ogrBrans = ogr_brans.SelectedItem.ToString();
+           
+
             if (txt_password.Text == txt_cPassword.Text)
             {
                 cmd = new MySqlCommand();
                 con.Open();
                 cmd.Connection = con;
-                cmd.CommandText = "insert into ogretmen( ogrkullaniciadi, ogrsifre, ogrmailadresi) values('" + txt_kullaniciadi.Text + "', '" + txt_password.Text + "', '" + txt_mailadresi.Text + "')";
+                cmd.CommandText = "insert into ogretmen(ogrkullaniciadi, ogrsifre, ogrmailadresi, ogr_ders) values('" + txt_kullaniciadi.Text + "', '" + txt_password.Text + "', '" + txt_mailadresi.Text + "', '" + ogrBrans + "')";
                 dr = cmd.ExecuteReader();
                 if (dr.Read())
                 {
