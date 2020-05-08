@@ -46,9 +46,12 @@ namespace SoruProjesiYon
                 // 3 ogrmailadresi
                 // 4 ogr ders
                 label10.Text = dr.GetValue(4).ToString();
-             
-           
-        
+                label19.Text = dr.GetValue(4).ToString();
+                label12.Text = dr.GetValue(4).ToString();
+
+
+
+
 
             }
             con.Close();
@@ -138,6 +141,126 @@ namespace SoruProjesiYon
          
             var dersSecimi = label10.Text + " dersine soru eklemektesiniz.";
             label7.Text = dersSecimi;
+
+        }
+
+        private void Label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TextBox6_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboBox3_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            var dogrucevapcmb = cmb_dogrucevap.SelectedItem;
+            var dersadi = cmb_dogrucevap.SelectedItem;
+
+            if (txt_soru.TextLength == 0 || txt_cevap_a.TextLength == 0 || txt_cevap_b.TextLength == 0 || txt_cevap_c.TextLength == 0 || txt_cevap_d.TextLength == 0)
+            {
+                MessageBox.Show("Lütfen eksikleri tamamlayınız.");
+
+
+            }
+            else
+            {
+
+                //id, soru_icerik, dogru_cevap, cevap1 cevap2 cevap3 cevap4
+                MessageBox.Show("000");
+                cmd = new MySqlCommand();
+                con.Open();
+                cmd.Connection = con;
+                cmd.CommandText = "insert into " + label19.Text + "( soru_icerik, dogru_cevap, cevap1, cevap2, cevap3, cevap4) values('" + txt_soru.Text + "', '" + dogrucevapcmb + "', '" + txt_cevap_a.Text + "', '" + txt_cevap_b.Text + "', '" + txt_cevap_c.Text + "', '" + txt_cevap_d.Text + "')";
+                dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    MessageBox.Show(" Soru eklediniz!");
+
+                }
+                con.Close();
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            var dogrucevapcmb = cmb_dogrucevap.SelectedItem;
+            var dersadi = cmb_dogrucevap.SelectedItem;
+
+            if (txt_soru.TextLength == 0 || txt_cevap_a.TextLength == 0 || txt_cevap_b.TextLength == 0 || txt_cevap_c.TextLength == 0 || txt_cevap_d.TextLength == 0)
+            {
+                MessageBox.Show("Lütfen eksikleri tamamlayınız.");
+
+
+            }
+            else
+            {
+
+                //id, soru_icerik, dogru_cevap, cevap1 cevap2 cevap3 cevap4
+                MessageBox.Show("000");
+                cmd = new MySqlCommand();
+                con.Open();
+                cmd.Connection = con;
+                cmd.CommandText = "insert into " + label12.Text + "( soru_icerik, dogru_cevap, cevap1, cevap2, cevap3, cevap4) values('" + txt_soru.Text + "', '" + dogrucevapcmb + "', '" + txt_cevap_a.Text + "', '" + txt_cevap_b.Text + "', '" + txt_cevap_c.Text + "', '" + txt_cevap_d.Text + "')";
+                dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    MessageBox.Show(" Soru eklediniz!");
+
+                }
+                con.Close();
+
+
+            }
+
+
+
+
+
+
 
         }
     }

@@ -70,5 +70,10 @@ namespace SoruProjesiYon
             girisyap.Show();
             this.Hide();
         }
+
+        private void Ogr_brans_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
