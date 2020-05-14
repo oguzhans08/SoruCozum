@@ -97,11 +97,13 @@ namespace SoruProjesiYon
         private void Btn_turkce_ders_Click(object sender, EventArgs e)
         {
            string derssecim = "turkce";
+            konusecimi ders_secim_form = new konusecimi();
 
-            ders_secim_form ders_secm = new ders_secim_form();
-            ders_secm.kullaniciAdi = kullaniciAdi;
-            ders_secm.derssecim = derssecim;
-            ders_secm.Show();
+            
+
+            ders_secim_form.kullaniciAdi = kullaniciAdi;
+            ders_secim_form.derssecim = derssecim;
+            ders_secim_form.Show();
             this.Hide();
         }
 

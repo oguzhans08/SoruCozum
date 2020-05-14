@@ -20,6 +20,11 @@ namespace SoruProjesiYon
         MySqlCommand cmd;
         MySqlDataReader dr;
 
+        public string Konusecimi
+        {
+            get;
+            set;
+        }
         public string kullaniciAdi
         {
             get;
@@ -63,37 +68,12 @@ namespace SoruProjesiYon
         int y = -1;
         bool moving = false;
         Pen pen;
+        int sonraki = 0;
+
+        List<String> columnData = new List<String>();
+
         private void Ders_secim_form_Load(object sender, EventArgs e)
         {
-          
-            con = new MySqlConnection("datasource=127.0.0.1;port=3306;username=root;password=;database=sorucozum;");
-
-            cmd = new MySqlCommand();
-            con.Open();
-            cmd.Connection = con;
-        
-            cmd.CommandText = "Select * from uyeler where kullaniciadi='" + kullaniciAdi + "'";
-            dr = cmd.ExecuteReader();
-            if (dr.Read())
-            {
-                // 0 id
-                // 1 soru
-                // 2dogrucevap
-                // 3cevap1
-                // 4cevap2
-                // 5cevap3
-                // 6cevap4
-                label6.Text = dr.GetValue(0).ToString();
-               
-               
-            
-
-            }
-            con.Close();
-
-
-
-
             btn_bitir.Enabled = false;
             g = panel1.CreateGraphics();
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -101,15 +81,15 @@ namespace SoruProjesiYon
             pen.StartCap = pen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
             label3.Text = sayi.ToString();
 
+            con = new MySqlConnection("datasource=127.0.0.1;port=3306;username=root;password=;database=sorucozum;");
 
-         
 
             lbl_derssecim.Text = derssecim;
 
             cmd = new MySqlCommand();
             con.Open();
             cmd.Connection = con;
-            cmd.CommandText = "Select * from " + derssecim + " where id='" + sayi + "'";
+            cmd.CommandText = "Select * from " + derssecim + "";
             dr = cmd.ExecuteReader();
             if (dr.Read())
             {
@@ -122,6 +102,7 @@ namespace SoruProjesiYon
                 // 6cevap4
 
                 label1.Text += dr.GetValue(1).ToString();
+                columnData.Add(dr.GetString(sonraki));
 
                 radioButton1.Text = dr.GetValue(3).ToString();
                 radioButton2.Text = dr.GetValue(4).ToString();
@@ -136,6 +117,15 @@ namespace SoruProjesiYon
 
         private void Button1_Click(object sender, EventArgs e)
         {
+
+         
+           
+          
+
+
+            
+
+
             btn_bitir.Enabled = true;
 
 
@@ -143,7 +133,7 @@ namespace SoruProjesiYon
             {
 
                 string cevap = "a";
-                label2.Text = cevap;
+               // label2.Text = cevap;
                 con.Close();
 
                 cmd = new MySqlCommand();
@@ -166,12 +156,12 @@ namespace SoruProjesiYon
                         cmd = new MySqlCommand();
                         con.Open();
                         cmd.Connection = con;
-                        cmd.CommandText = "Select * from " + derssecim + " where id=" + sayi + ""; //syntax doğru
+                        cmd.CommandText = "Select * from " + derssecim + " "; //syntax doğru
                         dr = cmd.ExecuteReader();
                         if (dr.Read())
                         {
                             label1.Text = dr.GetValue(1).ToString();
-
+                            columnData.Add(dr.GetString(sonraki));
                             radioButton1.Text = dr.GetValue(3).ToString();
                             radioButton2.Text = dr.GetValue(4).ToString();
                             radioButton3.Text = dr.GetValue(5).ToString();
@@ -500,21 +490,7 @@ namespace SoruProjesiYon
 
             }
 
-            cmd = new MySqlCommand();
-            con.Open();
-            cmd.Connection = con;
-            cmd.CommandText = "insert into cozulensorular(kullaniciID, soruID) values('" + label6.Text + "', '" + sayi + "')";
-            dr = cmd.ExecuteReader();
-            if (dr.Read())
-            {
-                MessageBox.Show("Sayi Soru ID: " + sayi);
-            }
-            con.Close();
 
-            
-     
-           
-       
             //veritabanından dogru_cevap sütunundan cevabı al
         }
 
@@ -668,11 +644,6 @@ namespace SoruProjesiYon
 
 
 
-        }
-
-        private void button3_Click_1(object sender, EventArgs e)
-        {
-            
         }
 
         private void Panel1_MouseUp(object sender, MouseEventArgs e)

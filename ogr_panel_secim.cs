@@ -39,5 +39,14 @@ namespace SoruProjesiYon
             ogr_secim_dersler.Show();
             this.Hide();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            org_secim_ogrenci org_secim_ogrenci = new org_secim_ogrenci();
+
+            //org_secim_ogrenci.kullaniciAdi = textBox1.Text;
+            org_secim_ogrenci.Show();
+            this.Hide();
+        }
     }
 }
