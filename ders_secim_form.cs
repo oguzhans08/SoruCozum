@@ -25,6 +25,11 @@ namespace SoruProjesiYon
             get;
             set;
         }
+        public string TestId
+        {
+            get;
+            set;
+        }
         public string kullaniciAdi
         {
             get;
@@ -89,7 +94,7 @@ namespace SoruProjesiYon
             cmd = new MySqlCommand();
             con.Open();
             cmd.Connection = con;
-            cmd.CommandText = "Select * from " + derssecim + "";
+            cmd.CommandText = "Select * from sorular WHERE testid="+TestId;
             dr = cmd.ExecuteReader();
             if (dr.Read())
             {
@@ -101,13 +106,13 @@ namespace SoruProjesiYon
                 // 5cevap3
                 // 6cevap4
 
-                label1.Text += dr.GetValue(1).ToString();
+                //label1.Text += dr[""].ToString();
                 columnData.Add(dr.GetString(sonraki));
 
-                radioButton1.Text = dr.GetValue(3).ToString();
-                radioButton2.Text = dr.GetValue(4).ToString();
-                radioButton3.Text = dr.GetValue(5).ToString();
-                radioButton4.Text = dr.GetValue(6).ToString();
+                radioButton1.Text = dr["cevap1"].ToString();
+                radioButton2.Text = dr["cevap2"].ToString();
+                radioButton3.Text = dr["cevap3"].ToString();
+                radioButton4.Text = dr["cevap4"].ToString();
 
             }
             con.Close();

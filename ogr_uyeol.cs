@@ -42,7 +42,7 @@ namespace SoruProjesiYon
                 cmd = new MySqlCommand();
                 con.Open();
                 cmd.Connection = con;
-                cmd.CommandText = "insert into ogretmen(ogrkullaniciadi, ogrsifre, ogrmailadresi, ogr_ders) values('" + txt_kullaniciadi.Text + "', '" + txt_password.Text + "', '" + txt_mailadresi.Text + "', '" + ogrBrans + "')";
+                cmd.CommandText = "insert into ogretmen(ogrkullaniciadi, ogrsifre, ogrmailadresi, ogrders) values('" + txt_kullaniciadi.Text + "', '" + txt_password.Text + "', '" + txt_mailadresi.Text + "', '" + ogrBrans + "')";
                 dr = cmd.ExecuteReader();
                 if (dr.Read())
                 {

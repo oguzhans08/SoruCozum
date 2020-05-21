@@ -267,10 +267,19 @@ namespace SoruProjesiYon
                 }
                 con.Close();
 
-
+                 
             }
 
+            //SqlCommand com2 = new SqlCommand();
+            //com2.Connection = connection;
+            //com2.CommandText = "SELECT testadi,konuadi FROM testler ";
+            //using (SqlDataReader dr2 = com2.ExecuteReader())
+            //{
+            //    while (dr2.Read())
+            //    {
 
+            //    }
+            //}
 
 
 
@@ -298,6 +307,18 @@ namespace SoruProjesiYon
             table = new DataTable();
             adapter.Fill(table);
             dataGridView1.DataSource = table;
+        }
+
+        private void ComboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Txt_ismi_TextChanged(object sender, EventArgs e)
+        {
+            
+
+
         }
     }
 }
