@@ -16,6 +16,7 @@ namespace SoruProjesiYon
     public partial class konusecimi : MetroForm
     {
         MySqlConnection con;
+        public int kullaniciId { get; set; }
 
         public konusecimi()
         {
@@ -52,6 +53,7 @@ namespace SoruProjesiYon
             Konusecimi = "Ses Bilgisi";
 
             ders_secim_form ders_secim_form = new ders_secim_form();
+            ders_secim_form.kullaniciId = kullaniciId;
             ders_secim_form.derssecim = derssecim;
             ders_secim_form.Konusecimi = Konusecimi;
             ders_secim_form.Show();
@@ -62,6 +64,7 @@ namespace SoruProjesiYon
         {
             Konusecimi = "Dil Anlatım";
             ders_secim_form ders_secim_form = new ders_secim_form();
+            ders_secim_form.kullaniciId = kullaniciId;
             ders_secim_form.derssecim = derssecim;
             ders_secim_form.Konusecimi = Konusecimi;
             ders_secim_form.Show();
@@ -88,6 +91,7 @@ namespace SoruProjesiYon
             var konuAdi = comboBox1.SelectedItem.ToString();
             var testAdi = ((ListItem)comboBox2.SelectedItem).Value.ToString();
             ders_secim_form ders_secim_form = new ders_secim_form();
+            ders_secim_form.kullaniciId = kullaniciId;
             ders_secim_form.derssecim = derssecim;
             ders_secim_form.Konusecimi = konuAdi;
             ders_secim_form.TestId = testAdi;

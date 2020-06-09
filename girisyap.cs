@@ -46,7 +46,7 @@ namespace SoruProjesiYon
             if (dr.Read())
             {
                 anasayfa anasayfa = new anasayfa();
-
+                anasayfa.kullaniciId = dr.GetInt32(0);
                 anasayfa.kullaniciAdi = textBox1.Text;
                 anasayfa.Show();
                 this.Hide();

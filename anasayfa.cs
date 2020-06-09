@@ -33,6 +33,7 @@ namespace SoruProjesiYon
             con = new MySqlConnection("datasource=127.0.0.1;port=3306;username=root;password=;database=sorucozum;");
 
         }
+        public int kullaniciId { get; set; }
         public string kullaniciAdi { get; set; }
         public string derssecim { get; set; }
         public string cevaps;
@@ -42,7 +43,7 @@ namespace SoruProjesiYon
             con.Open();
             cmd.Connection = con;
 
-            cmd.CommandText = "Select * from uyeler where kullaniciadi='" + kullaniciAdi + "'";
+            cmd.CommandText = "Select * from uyeler where id='" + kullaniciId + "'";
             dr = cmd.ExecuteReader();
             if (dr.Read())
             {
@@ -53,6 +54,9 @@ namespace SoruProjesiYon
                 // 4cevap2
                 // 5cevap3
                 // 6cevap4
+                label4.Text = (dr.GetInt32(6) + dr.GetInt32(7)).ToString();
+                label5.Text = dr.GetInt32(6).ToString();
+                label6.Text = dr.GetInt32(7).ToString();
                 label10.Text = dr.GetValue(0).ToString();
                 var kullaniciID = label10.Text;
             
@@ -61,19 +65,6 @@ namespace SoruProjesiYon
             }
             con.Close();
 
-            cmd = new MySqlCommand();
-            con.Open();
-            cmd.Connection = con;
-            //SELECT COUNT(soruID) FROM cozulensorular where `kullaniciID`= 3;
-            cmd.CommandText = "SELECT COUNT(soruID) FROM cozulensorular where kullaniciID='" + label10.Text + "'";
-            dr = cmd.ExecuteReader();
-            if (dr.Read())
-            {
-             
-                label4.Text = dr.GetValue(0).ToString();
-
-            }
-            con.Close();
 
             string imgUrl;
             kullansali.Text = kullaniciAdi;
@@ -99,8 +90,8 @@ namespace SoruProjesiYon
            string derssecim = "turkce";
             konusecimi ders_secim_form = new konusecimi();
 
-            
 
+            ders_secim_form.kullaniciId = kullaniciId;
             ders_secim_form.kullaniciAdi = kullaniciAdi;
             ders_secim_form.derssecim = derssecim;
             ders_secim_form.Show();
@@ -110,40 +101,52 @@ namespace SoruProjesiYon
         private void Btn_matematik_ders_Click(object sender, EventArgs e)
         {
             derssecim = "matematik";
-            ders_secim_form ders_secm = new ders_secim_form();
+            konusecimi ders_secim_form = new konusecimi();
 
-            ders_secm.derssecim = derssecim;
-            ders_secm.Show();
+
+            ders_secim_form.kullaniciId = kullaniciId;
+            ders_secim_form.kullaniciAdi = kullaniciAdi;
+            ders_secim_form.derssecim = derssecim;
+            ders_secim_form.Show();
             this.Hide();
         }
 
         private void Btn_kimya_ders_Click(object sender, EventArgs e)
         {
             derssecim = "kimya";
-            ders_secim_form ders_secm = new ders_secim_form();
+            konusecimi ders_secim_form = new konusecimi();
 
-            ders_secm.derssecim = derssecim;
-            ders_secm.Show();
+
+            ders_secim_form.kullaniciId = kullaniciId;
+            ders_secim_form.kullaniciAdi = kullaniciAdi;
+            ders_secim_form.derssecim = derssecim;
+            ders_secim_form.Show();
             this.Hide();
         }
 
         private void Btn_cografya_ders_Click(object sender, EventArgs e)
         {
             derssecim = "cografya";
-            ders_secim_form ders_secm = new ders_secim_form();
+            konusecimi ders_secim_form = new konusecimi();
 
-            ders_secm.derssecim = derssecim;
-            ders_secm.Show();
+
+            ders_secim_form.kullaniciId = kullaniciId;
+            ders_secim_form.kullaniciAdi = kullaniciAdi;
+            ders_secim_form.derssecim = derssecim;
+            ders_secim_form.Show();
             this.Hide();
         }
 
         private void Btn_fizik_ders_Click(object sender, EventArgs e)
         {
             derssecim = "Fizik";
-            ders_secim_form ders_secm = new ders_secim_form();
+            konusecimi ders_secim_form = new konusecimi();
 
-            ders_secm.derssecim = derssecim;
-            ders_secm.Show();
+
+            ders_secim_form.kullaniciId = kullaniciId;
+            ders_secim_form.kullaniciAdi = kullaniciAdi;
+            ders_secim_form.derssecim = derssecim;
+            ders_secim_form.Show();
             this.Hide();
 
         }
@@ -194,6 +197,12 @@ namespace SoruProjesiYon
             dr = cmd.ExecuteReader();
    
             con.Close();
+
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+
 
         }
     }

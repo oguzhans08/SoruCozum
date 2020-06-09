@@ -20,6 +20,8 @@ namespace SoruProjesiYon
         MySqlCommand cmd;
         MySqlDataReader dr;
 
+        public int kullaniciId { get; set; }
+
         public string Konusecimi
         {
             get;
@@ -56,6 +58,18 @@ namespace SoruProjesiYon
             set;
         }
 
+        public class sorular
+        {
+            public int id { get; set; }
+            public int testid { get; set; }
+            public string konu { get; set; }
+            public string soru_icerik { get; set; }
+            public string dogru_cevap { get; set; }
+            public string cevap1 { get; set; }
+            public string cevap2 { get; set; }
+            public string cevap3 { get; set; }
+            public string cevap4 { get; set; }
+        }
 
         public ders_secim_form()
         {
@@ -77,6 +91,10 @@ namespace SoruProjesiYon
 
         List<String> columnData = new List<String>();
 
+        int soruIndex = 0;
+        List<sorular> sorularList = new List<sorular>();
+        List<string> soruCevapList = new List<string>();
+
         private void Ders_secim_form_Load(object sender, EventArgs e)
         {
             btn_bitir.Enabled = false;
@@ -84,417 +102,106 @@ namespace SoruProjesiYon
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             pen = new Pen(Color.Black, 3);
             pen.StartCap = pen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
-            label3.Text = sayi.ToString();
+            
 
             con = new MySqlConnection("datasource=127.0.0.1;port=3306;username=root;password=;database=sorucozum;");
 
 
-            lbl_derssecim.Text = derssecim;
+            
 
             cmd = new MySqlCommand();
             con.Open();
             cmd.Connection = con;
-            cmd.CommandText = "Select * from sorular WHERE testid="+TestId;
+            cmd.CommandText = "Select * from sorular WHERE testid='" + TestId + "'";
             dr = cmd.ExecuteReader();
-            if (dr.Read())
+
+            
+            while (dr.Read())
             {
-                // 0 id
-                // 1 soru
-                // 2dogrucevap
-                // 3cevap1
-                // 4cevap2
-                // 5cevap3
-                // 6cevap4
+                // 0id
+                // 1testid
+                // 2konu
+                // 3soruicerik
+                // 4dogrucevap
+                // 5cevap1
+                // 6cevap2
+                // 7cevap3
+                // 8cevap4
 
+                sorular model = new sorular();
+                model.id = dr.GetInt32(0);
+                model.testid = dr.GetInt32(1);
+                model.konu = dr.GetString(2);
+                model.soru_icerik = dr.GetString(3);
+                model.dogru_cevap = dr.GetString(4);
+                model.cevap1 = dr.GetString(5);
+                model.cevap2 = dr.GetString(6);
+                model.cevap3 = dr.GetString(7);
+                model.cevap4 = dr.GetString(8);
+
+                sorularList.Add(model);
                 //label1.Text += dr[""].ToString();
-                columnData.Add(dr.GetString(sonraki));
+               /* columnData.Add(dr.GetString(sonraki));
 
+                label1.Text =
                 radioButton1.Text = dr["cevap1"].ToString();
                 radioButton2.Text = dr["cevap2"].ToString();
                 radioButton3.Text = dr["cevap3"].ToString();
-                radioButton4.Text = dr["cevap4"].ToString();
+                radioButton4.Text = dr["cevap4"].ToString();*/
 
             }
             con.Close();
 
-
+            label3.Text = (soruIndex+1).ToString();
+            lbl_derssecim.Text = derssecim;
+            label1.Text = sorularList[soruIndex].konu;
+            label7.Text = sorularList[soruIndex].soru_icerik;
+            radioButton1.Text = sorularList[soruIndex].cevap1;
+            radioButton2.Text = sorularList[soruIndex].cevap2;
+            radioButton3.Text = sorularList[soruIndex].cevap3;
+            radioButton4.Text = sorularList[soruIndex].cevap4;
         }
+
 
         private void Button1_Click(object sender, EventArgs e)
         {
 
-         
-           
-          
-
-
-            
-
 
             btn_bitir.Enabled = true;
-
-
-            if (radioButton1.Checked)
+            if(radioButton1.Checked)
             {
-
-                string cevap = "a";
-               // label2.Text = cevap;
-                con.Close();
-
-                cmd = new MySqlCommand();
-                con.Open();
-                cmd.Connection = con;
-                cmd.CommandText = "Select * from " + derssecim + " where id=" + sayi + " and dogru_cevap='" + cevap + "'"; //syntax doğru
-                dr = cmd.ExecuteReader();
-                if (dr.Read())
-                {
-                    url = dr.GetValue(1).ToString();
-
-                    if (cevap == dr.GetValue(2).ToString())
-                    {
-
-
-                        dogru++;
-                        con.Close();
-                        sayi = sayi + 1;
-                        label3.Text = sayi.ToString();
-                        cmd = new MySqlCommand();
-                        con.Open();
-                        cmd.Connection = con;
-                        cmd.CommandText = "Select * from " + derssecim + " "; //syntax doğru
-                        dr = cmd.ExecuteReader();
-                        if (dr.Read())
-                        {
-                            label1.Text = dr.GetValue(1).ToString();
-                            columnData.Add(dr.GetString(sonraki));
-                            radioButton1.Text = dr.GetValue(3).ToString();
-                            radioButton2.Text = dr.GetValue(4).ToString();
-                            radioButton3.Text = dr.GetValue(5).ToString();
-                            radioButton4.Text = dr.GetValue(6).ToString();
-
-
-                        }
-                        else
-                        {
-
-                            sayi = sayi - 1;
-                            label3.Text = sayi.ToString();
-                            MessageBox.Show("Soru bitti");
-                        }
-
-                        con.Close();
-
-                    }
-
-
-                }
-                else
-                {
-
-                    yanlis++;
-
-                    sayi = sayi + 1;
-                    label3.Text = sayi.ToString();
-                    con.Close();
-
-
-                    cmd = new MySqlCommand();
-                    con.Open();
-                    cmd.Connection = con;
-                    cmd.CommandText = "Select * from " + derssecim + " where id=" + sayi + ""; //syntax doğru
-                    dr = cmd.ExecuteReader();
-                    if (dr.Read())
-                    {
-                        label1.Text = dr.GetValue(1).ToString();
-
-
-                        radioButton1.Text = dr.GetValue(3).ToString();
-                        radioButton2.Text = dr.GetValue(4).ToString();
-                        radioButton3.Text = dr.GetValue(5).ToString();
-                        radioButton4.Text = dr.GetValue(6).ToString();
-
-                    }
-                    else
-                    {
-
-                        sayi = sayi - 1;
-                        label3.Text = sayi.ToString();
-                        MessageBox.Show("Soru bitti");
-                    }
-                    con.Close();
-
-                }
-                con.Close();
-
+                soruCevapList.Add("a");
             }
-            if (radioButton2.Checked)
+            else if(radioButton2.Checked)
             {
-
-                string cevap = "b";
-                label2.Text = cevap;
-                con.Close();
-
-                cmd = new MySqlCommand();
-                con.Open();
-                cmd.Connection = con;
-                cmd.CommandText = "Select * from " + derssecim + " where id=" + sayi + " and dogru_cevap='" + cevap + "'"; //syntax doğru
-                dr = cmd.ExecuteReader();
-                if (dr.Read())
-                {
-                    url = dr.GetValue(1).ToString();
-                    if (cevap == dr.GetValue(2).ToString())
-                    {
-
-
-                        dogru++;
-                        con.Close();
-                        sayi = sayi + 1;
-                        label3.Text = sayi.ToString();
-                        cmd = new MySqlCommand();
-                        con.Open();
-                        cmd.Connection = con;
-                        cmd.CommandText = "Select * from " + derssecim + " where id=" + sayi + ""; //syntax doğru
-                        dr = cmd.ExecuteReader();
-                        if (dr.Read())
-                        {
-                            label1.Text = dr.GetValue(1).ToString();
-
-                            radioButton1.Text = dr.GetValue(3).ToString();
-                            radioButton2.Text = dr.GetValue(4).ToString();
-                            radioButton3.Text = dr.GetValue(5).ToString();
-                            radioButton4.Text = dr.GetValue(6).ToString();
-
-
-                        }
-                        else
-                        {
-
-                            sayi = sayi - 1;
-                            label3.Text = sayi.ToString();
-                            MessageBox.Show("Soru bitti");
-                        }
-
-                        con.Close();
-
-                    }
-
-
-                }
-                else
-                {
-
-                    yanlis++;
-                    con.Close();
-                    sayi = sayi + 1;
-                    label3.Text = sayi.ToString();
-                    
-
-
-                    cmd = new MySqlCommand();
-                    con.Open();
-                    cmd.Connection = con;
-                    cmd.CommandText = "Select * from " + derssecim + " where id=" + sayi + ""; //syntax doğru
-                    dr = cmd.ExecuteReader();
-                    if (dr.Read())
-                    {
-                        label1.Text = dr.GetValue(1).ToString();
-
-
-                        radioButton1.Text = dr.GetValue(3).ToString();
-                        radioButton2.Text = dr.GetValue(4).ToString();
-                        radioButton3.Text = dr.GetValue(5).ToString();
-                        radioButton4.Text = dr.GetValue(6).ToString();
-
-                    }
-                    else
-                    {
-
-                        sayi = sayi - 1;
-                        label3.Text = sayi.ToString();
-                        MessageBox.Show("Soru bitti");
-                    }
-                    con.Close();
-
-                }
-                con.Close();
-
+                soruCevapList.Add("b");
             }
-            if (radioButton3.Checked)
+            else if(radioButton3.Checked)
             {
-
-                string cevap = "c";
-                label2.Text = cevap;
-                con.Close();
-
-                cmd = new MySqlCommand();
-                con.Open();
-                cmd.Connection = con;
-                cmd.CommandText = "Select * from " + derssecim + " where id=" + sayi + " and dogru_cevap='" + cevap + "'"; //syntax doğru
-                dr = cmd.ExecuteReader();
-                if (dr.Read())
-                {
-                    url = dr.GetValue(1).ToString();
-
-                    if (cevap == dr.GetValue(2).ToString())
-                    {
-
-
-                        dogru++;
-                        con.Close();
-                        sayi = sayi + 1;
-                        label3.Text = sayi.ToString();
-                        cmd = new MySqlCommand();
-                        con.Open();
-                        cmd.Connection = con;
-                        cmd.CommandText = "Select * from " + derssecim + " where id=" + sayi + ""; //syntax doğru
-                        dr = cmd.ExecuteReader();
-                        if (dr.Read())
-                        {
-
-                            label1.Text = dr.GetValue(1).ToString();
-                            radioButton1.Text = dr.GetValue(3).ToString();
-                            radioButton2.Text = dr.GetValue(4).ToString();
-                            radioButton3.Text = dr.GetValue(5).ToString();
-                            radioButton4.Text = dr.GetValue(6).ToString();
-
-
-
-                        }
-                        else
-                        {
-
-                            sayi = sayi - 1;
-                            label3.Text = sayi.ToString();
-                            MessageBox.Show("Soru bitti");
-                        }
-
-                        con.Close();
-
-                    }
-
-
-                }
-                else
-                {
-
-                    yanlis++;
-
-                    sayi = sayi + 1;
-                    label3.Text = sayi.ToString();
-                    con.Close();
-
-
-                    cmd = new MySqlCommand();
-                    con.Open();
-                    cmd.Connection = con;
-                    cmd.CommandText = "Select * from " + derssecim + " where id=" + sayi + ""; //syntax doğru
-                    dr = cmd.ExecuteReader();
-                    if (dr.Read())
-                    {
-                        label1.Text = dr.GetValue(1).ToString();
-                        url = dr.GetValue(1).ToString();
-
-                        radioButton1.Text = dr.GetValue(3).ToString();
-                        radioButton2.Text = dr.GetValue(4).ToString();
-                        radioButton3.Text = dr.GetValue(5).ToString();
-                        radioButton4.Text = dr.GetValue(6).ToString();
-
-                    }
-                    else
-                    {
-
-                        sayi = sayi - 1;
-                        label3.Text = sayi.ToString();
-                        MessageBox.Show("Soru bitti");
-                    }
-                    con.Close();
-
-                }
-                con.Close();
-
+                soruCevapList.Add("c");
             }
-            if (radioButton4.Checked)
+            else if(radioButton4.Checked)
             {
-
-                string cevap = "d";
-                label2.Text = cevap;
-
-                cmd = new MySqlCommand();
-                con.Open();
-                cmd.Connection = con;
-                cmd.CommandText = "Select * from " + derssecim + " where id=" + sayi + " and dogru_cevap='" + cevap + "'"; //syntax doğru
-                dr = cmd.ExecuteReader();
-                if (dr.Read())
-                {
-                    url = dr.GetValue(1).ToString();
-                    if (cevap == dr.GetValue(2).ToString())
-                    {
-
-
-                        dogru++;
-                        con.Close();
-                        sayi = sayi + 1;
-                        label3.Text = sayi.ToString();
-                        cmd = new MySqlCommand();
-                        con.Open();
-                        cmd.Connection = con;
-                        cmd.CommandText = "Select * from " + derssecim + " where id=" + sayi + ""; //syntax doğru
-                        dr = cmd.ExecuteReader();
-                        if (dr.Read())
-                        {
-                            label1.Text = dr.GetValue(1).ToString();
-                            radioButton1.Text = dr.GetValue(3).ToString();
-                            radioButton2.Text = dr.GetValue(4).ToString();
-                            radioButton3.Text = dr.GetValue(5).ToString();
-                            radioButton4.Text = dr.GetValue(6).ToString();
-
-
-
-                        }
-                        con.Close();
-
-                    }
-
-
-                }
-                else
-                {
-
-                    yanlis++;
-
-                    sayi = sayi + 1;
-                    label3.Text = sayi.ToString();
-                    con.Close();
-                    cmd = new MySqlCommand();
-                    con.Open();
-                    cmd.Connection = con;
-                    cmd.CommandText = "Select * from " + derssecim + " where id=" + sayi + ""; //syntax doğru
-                    dr = cmd.ExecuteReader();
-                    if (dr.Read())
-                    {
-                        label1.Text = dr.GetValue(1).ToString();
-
-                        radioButton1.Text = dr.GetValue(3).ToString();
-                        radioButton2.Text = dr.GetValue(4).ToString();
-                        radioButton3.Text = dr.GetValue(5).ToString();
-                        radioButton4.Text = dr.GetValue(6).ToString();
-
-                    }
-                    else
-                    {
-
-                        sayi = sayi - 1;
-                        label3.Text = sayi.ToString();
-                        MessageBox.Show("Soru bitti");
-                    }
-
-                    con.Close();
-
-                }
-
-
+                soruCevapList.Add("d");
             }
 
+            //sonraki soruya geçiyoruz.
+            if(soruIndex+1 == sorularList.Count)
+            {
+                MessageBox.Show("Test bitti lütfen testi bitir butonuna tıklayınız.");
+            }
+            else
+            {
+                soruIndex++;
+                label3.Text = (soruIndex + 1).ToString();
+                lbl_derssecim.Text = derssecim;
+                label1.Text = sorularList[soruIndex].konu;
+                label7.Text = sorularList[soruIndex].soru_icerik;
+                radioButton1.Text = sorularList[soruIndex].cevap1;
+                radioButton2.Text = sorularList[soruIndex].cevap2;
+                radioButton3.Text = sorularList[soruIndex].cevap3;
+                radioButton4.Text = sorularList[soruIndex].cevap4;
+            }
 
             //veritabanından dogru_cevap sütunundan cevabı al
         }
@@ -551,9 +258,54 @@ namespace SoruProjesiYon
 
         private void Btn_bitir_Click(object sender, EventArgs e)
         {
-            dogrusayi = dogru;
-            yanlissayi = yanlis;
-         
+            int cevapIndex = 0;
+            foreach(var soru in sorularList)
+            {
+                if(soruCevapList[cevapIndex]==soru.dogru_cevap)
+                {
+                    dogrusayi++;
+                }
+                else
+                {
+                    yanlissayi++;
+                }
+                cevapIndex++;
+            }
+
+            con = new MySqlConnection("datasource=127.0.0.1;port=3306;username=root;password=;database=sorucozum;");
+
+
+
+
+            cmd = new MySqlCommand();
+            con.Open();
+            cmd.Connection = con;
+            cmd.CommandText = "Select dogrucevap,yanliscevap from uyeler WHERE id='" + kullaniciId + "'";
+            dr = cmd.ExecuteReader();
+
+            int dtdogrucevap = 0;
+            int dtyanliscevap = 0;
+
+            if(dr.Read())
+            {
+                dtdogrucevap = dr.GetInt32(0);
+                dtyanliscevap = dr.GetInt32(1);
+            }
+            con.Close();
+
+            dtdogrucevap += dogrusayi;
+            dtyanliscevap += yanlissayi;
+
+            cmd = new MySqlCommand();
+            con.Open();
+            cmd.Connection = con;
+            cmd.CommandText = "Update uyeler set dogrucevap='"+ dtdogrucevap + "' , yanliscevap='"+ dtyanliscevap + "' where id='"+kullaniciId+"'";
+            dr = cmd.ExecuteReader();
+            con.Close();
+
+            /*dogrusayi = dogru;
+            yanlissayi = yanlis;*/
+
             istatistik istatistikfrm = new istatistik();
 
             istatistikfrm.kullaniciAdi = kullaniciAdi;
