@@ -274,32 +274,69 @@ namespace SoruProjesiYon
 
             con = new MySqlConnection("datasource=127.0.0.1;port=3306;username=root;password=;database=sorucozum;");
 
+            dersAdi.dogruSayisi = dogrusayi;
+            dersAdi.yanlisSayisi = yanlissayi;
 
 
 
             cmd = new MySqlCommand();
             con.Open();
             cmd.Connection = con;
-            cmd.CommandText = "Select dogrucevap,yanliscevap from uyeler WHERE id='" + kullaniciId + "'";
+            cmd.CommandText = "Select dogrucevap,yanliscevap,"+dersAdi.ders+"d,"+dersAdi.ders+"y from uyeler WHERE id='" + kullaniciId + "'";
             dr = cmd.ExecuteReader();
 
             int dtdogrucevap = 0;
             int dtyanliscevap = 0;
+            int dersdogrucevap = 0;
+            int dersyanliscevap = 0;
+           
 
-            if(dr.Read())
+            if (dr.Read())
             {
                 dtdogrucevap = dr.GetInt32(0);
                 dtyanliscevap = dr.GetInt32(1);
+                dersdogrucevap = dr.GetInt32(2);
+                dersyanliscevap = dr.GetInt32(3);
+           
             }
             con.Close();
+            dersdogrucevap += dogrusayi;
+            dersyanliscevap += yanlissayi;
 
             dtdogrucevap += dogrusayi;
             dtyanliscevap += yanlissayi;
+            
+       
+            cmd = new MySqlCommand();
+            con.Open();
+            cmd.Connection = con;
+            cmd.CommandText = "Update uyeler set dogrucevap='"+ dtdogrucevap + "' , yanliscevap='"+ dtyanliscevap + "', "+dersAdi.ders+"d='"+ dersdogrucevap + "',"+dersAdi.ders+"y='"+ dersyanliscevap + "' where id='"+kullaniciId+"'";
+            dr = cmd.ExecuteReader();
+            con.Close();
 
             cmd = new MySqlCommand();
             con.Open();
             cmd.Connection = con;
-            cmd.CommandText = "Update uyeler set dogrucevap='"+ dtdogrucevap + "' , yanliscevap='"+ dtyanliscevap + "' where id='"+kullaniciId+"'";
+            cmd.CommandText = "select Testd,Testy from testler where dersadi='"+dersAdi.ders+"' and konuadi='"+dersAdi.konuAdi+"' and testadi='"+dersAdi.testAdi+"' ";
+            dr = cmd.ExecuteReader();
+          
+            int testdogrucevap = 0;
+            int testyanliscevap = 0;
+           
+            if (dr.Read())
+            {
+                testdogrucevap = dr.GetInt32(0);
+                testyanliscevap = dr.GetInt32(1);
+           
+
+            }
+            con.Close();
+            testdogrucevap += dogrusayi;
+            testyanliscevap += yanlissayi;
+            cmd = new MySqlCommand();
+            con.Open();
+            cmd.Connection = con;
+            cmd.CommandText = "update testler set Testd="+ testdogrucevap + " , Testy="+testyanliscevap+" where dersadi='" + dersAdi.ders + "' and konuadi='" + dersAdi.konuAdi + "' and testadi='" + dersAdi.testAdi + "' ";
             dr = cmd.ExecuteReader();
             con.Close();
 
@@ -400,6 +437,16 @@ namespace SoruProjesiYon
             return bitmap;
 
 
+
+        }
+
+        private void Lbl_derssecim_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label4_Click(object sender, EventArgs e)
+        {
 
         }
 

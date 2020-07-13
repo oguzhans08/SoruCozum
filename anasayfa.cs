@@ -88,6 +88,7 @@ namespace SoruProjesiYon
         private void Btn_turkce_ders_Click(object sender, EventArgs e)
         {
            string derssecim = "turkce";
+            dersAdi.ders = "Turkce";
             konusecimi ders_secim_form = new konusecimi();
 
 
@@ -101,6 +102,7 @@ namespace SoruProjesiYon
         private void Btn_matematik_ders_Click(object sender, EventArgs e)
         {
             derssecim = "matematik";
+            dersAdi.ders = "Matematik";
             konusecimi ders_secim_form = new konusecimi();
 
 
@@ -114,6 +116,7 @@ namespace SoruProjesiYon
         private void Btn_kimya_ders_Click(object sender, EventArgs e)
         {
             derssecim = "kimya";
+            dersAdi.ders = "Kimya";
             konusecimi ders_secim_form = new konusecimi();
 
 
@@ -127,6 +130,7 @@ namespace SoruProjesiYon
         private void Btn_cografya_ders_Click(object sender, EventArgs e)
         {
             derssecim = "cografya";
+            dersAdi.ders = "Cografya";
             konusecimi ders_secim_form = new konusecimi();
 
 
@@ -140,6 +144,7 @@ namespace SoruProjesiYon
         private void Btn_fizik_ders_Click(object sender, EventArgs e)
         {
             derssecim = "Fizik";
+            dersAdi.ders = "Fizik";
             konusecimi ders_secim_form = new konusecimi();
 
 
@@ -202,8 +207,11 @@ namespace SoruProjesiYon
 
         private void Button2_Click(object sender, EventArgs e)
         {
+            org_secim_ogretmen org_secim_ogretmen = new org_secim_ogretmen();
 
-
+            //org_secim_ogrenci.kullaniciAdi = textBox1.Text;
+            org_secim_ogretmen.Show();
+           
         }
     }
 }
